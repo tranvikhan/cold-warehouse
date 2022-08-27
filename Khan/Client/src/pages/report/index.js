@@ -32,20 +32,10 @@ class Report extends Component {
                     {this.props.loading && <Loader />}
 
                     <Row className="page-title align-items-center">
-                        <Col sm={2} xl={1}>
-                            <h4 className="mb-1 mt-0 inline">Report</h4>
+                        <Col sm={6} xl={3}>
+                            <h4 className="mb-1 mt-0 inline">Báo Cáo</h4>
                         </Col>
-                        <Col sm={4} xl={2}>
-                            <Select
-                                className="react-select bg-white"
-                                classNamePrefix="react-select"
-                                options={[
-                                    { value: 'WH0001', label: 'Ware House 1' },
-                                    { value: 'WH0002', label: 'Ware House 2' },
-                                    { value: 'WH0003', label: 'Ware House 3' },
-                                ]}></Select>
-                        </Col>
-
+                    
                         <Col sm={6} xl={9}>
                             <form className="form-inline float-sm-right mt-3 mt-sm-0">
                                 <div className="form-group mb-sm-0 mr-2">
@@ -60,7 +50,7 @@ class Report extends Component {
                                 </div>
                                 <UncontrolledButtonDropdown>
                                     <DropdownToggle color="primary" className="dropdown-toggle">
-                                        <i className="uil uil-file-alt mr-1"></i>Download
+                                        <i className="uil uil-file-alt mr-1"></i>Tải về
                                         <i className="icon ml-1">
                                             <ChevronDown />
                                         </i>
@@ -72,12 +62,12 @@ class Report extends Component {
                                         </DropdownItem>
                                         <DropdownItem>
                                             <Printer className="icon-dual icon-xs mr-2"></Printer>
-                                            <span>Print</span>
+                                            <span>In</span>
                                         </DropdownItem>
                                         <DropdownItem divider />
                                         <DropdownItem>
                                             <File className="icon-dual icon-xs mr-2"></File>
-                                            <span>Re-Generate</span>
+                                            <span>File</span>
                                         </DropdownItem>
                                     </DropdownMenu>
                                 </UncontrolledButtonDropdown>

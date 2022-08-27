@@ -1,1 +1,0 @@
-{"version":3,"sources":["pages/help/index.js"],"names":["Help"],"mappings":"qHAAA,mEAEe,SAASA,IACpB,OACI,oCACI","file":"static/js/30.3cbbc20a.chunk.js","sourcesContent":["import React from 'react';\r\n\r\nexport default function Help() {\r\n    return (\r\n        <>\r\n            <h3>Help Me</h3>\r\n        </>\r\n    );\r\n}\r\n"],"sourceRoot":""}

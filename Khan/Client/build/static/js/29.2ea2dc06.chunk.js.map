@@ -1,1 +1,0 @@
-{"version":3,"sources":["pages/about/index.js"],"names":["About"],"mappings":"qHAAA,mEAEe,SAASA,IACpB,OACI,oCACI","file":"static/js/29.2ea2dc06.chunk.js","sourcesContent":["import React from 'react';\r\n\r\nexport default function About() {\r\n    return (\r\n        <>\r\n            <h3>About Me</h3>\r\n        </>\r\n    );\r\n}\r\n"],"sourceRoot":""}

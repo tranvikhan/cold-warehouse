@@ -1,5 +1,6 @@
 const db = require("../models");
 const User = db.user;
+const result = require("../helps/result.helps");
 
 checkDuplicateUsernameOrEmail = (req, res, next) => {
   // Username
@@ -7,33 +8,27 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
     username: req.body.username,
   }).exec((err, user) => {
     if (err) {
-      res.status(500).send({ message: err });
+      result.ServerError(res,err);
       return;
     }
 
     if (user) {
-      res
-        .status(400)
-        .send({ messageError: "Failed! Username is already in use!" });
+      result.BadRequest(res,'Tên đăng nhập này đã tồn tại')
       return;
     }
-
     // Email
     User.findOne({
       email: req.body.email,
     }).exec((err, user) => {
       if (err) {
-        res.status(500).send({ messageError: err });
+        result.ServerError(res,err);
         return;
       }
 
       if (user) {
-        res
-          .status(400)
-          .send({ messageError: "Failed! Email is already in use!" });
+        result.BadRequest(res,'Email này đã tồn tại')
         return;
       }
-
       next();
     });
   });

@@ -1,8 +1,10 @@
 {
-  "hostType": "lan",
+  "hostType": "localhost",
   "lanType": "ip",
   "dev": true,
   "minify": false,
-  "urlRandomness": "w4-qpd",
-  "https": false
+  "urlRandomness": "hw-mx8",
+  "https": false,
+  "scheme": null,
+  "devClient": false
 }

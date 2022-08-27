@@ -1,10 +1,12 @@
 const config = require("../config/auth.config");
 const db = require("../models");
 const User = db.user;
+const result = require("../helps/result.helps");
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
+/* Sign Up --------------------------------------------*/
 exports.signup = (req, res) => {
   const user = new User({
     fullname: req.body.fullname ? req.body.fullname : req.body.username,
@@ -12,44 +14,45 @@ exports.signup = (req, res) => {
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
   });
+
   user.save((err, user) => {
     if (err) {
-      res.status(500).send({ messageError: err });
+      result.ServerError(res,err);
       return;
     }
-    res.status(200).send({ message: "SignUp Successfully" });
+    user.password = null;
+    result.Ok(res,{user:user});
   });
+
 };
 
+/* Sign In --------------------------------------------*/
 exports.signin = (req, res) => {
   User.findOne({
     username: req.body.username,
-  }).exec((err, user) => {
-    if (err) {
-      res.status(500).send({ message: err });
+  },'').exec((err, user) => {
+     if (err) {
+      result.ServerError(res,err);
       return;
     }
-
-    if (!user) {
-      return res.status(404).send({ messageError: "User Not found." });
+    if (!user) {    
+      result.NotFound(res,'Tài khoản không tồn tại');
+      return;
     }
 
     var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
 
     if (!passwordIsValid) {
-      return res.status(401).send({
-        accessToken: null,
-        messageError: "Invalid Password!",
-      });
+      result.BadRequest(res,'Sai mật khẩu');
+      return;
     }
 
     var token = jwt.sign({ id: user.id }, config.secret, {
       expiresIn: 86400, // 24 hours
     });
-
-    res.status(200).send({
-      user,
-      accessToken: token,
-    });
+    
+    user.password = null;
+    result.Ok(res,{user:user ,accessToken: token});
+    return;
   });
 };

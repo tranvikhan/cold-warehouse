@@ -86,7 +86,7 @@ const RevenueChart = () => {
     const apexLineChartWithLablesData = [
         {
             name: 'Revenue',
-            data: [10, 20, 5, 15, 10, 20, 15, 25, 20, 30, 25, 40, 30, 50, 35],
+            data: [-10, -20, -5, -15, -10, -20, -15, -25, -20, -30, -25, -40, -30, -50, -35],
         },
     ];
 
@@ -96,32 +96,32 @@ const RevenueChart = () => {
                 <Nav className="card-nav float-right">
                     <NavItem>
                         <NavLink className="text-muted" href="#">
-                            Today
+                            Hôm nay
                         </NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink className="text-muted" href="#">
-                            7d
+                            7 ngày
                         </NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink className="" active href="#">
-                            15d
+                            15 ngày
                         </NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink className="text-muted" href="#">
-                            1m
+                            1 tháng
                         </NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink className="text-muted" href="#">
-                            1y
+                            1 năm
                         </NavLink>
                     </NavItem>
                 </Nav>
 
-                <h5 className="card-title mb-0 header-title">Temperature Chart</h5>
+                <h5 className="card-title mb-0 header-title">Nhiệt độ trung bình</h5>
 
                 <Chart
                     options={apexLineChartWithLables}

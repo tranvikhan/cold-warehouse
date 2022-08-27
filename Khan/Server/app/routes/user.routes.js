@@ -1,15 +1,27 @@
 const { authJwt } = require("../middlewares");
 const controller = require("../controllers/user.controller");
-module.exports = function (app) {
-  app.use(function (req, res, next) {
-    res.header(
-      "Access-Control-Allow-Headers",
-      "x-access-token, Origin, Content-Type, Accept"
-    );
-    next();
-  });
+const upload = require('../middlewares/upload');
 
-  app.get("/api/user/", controller.getAllUser);
-  app.get("/api/user/find", controller.findUser);
+module.exports = function (app) {
+  /* Get All On System -----------------------------------------*/
+  /* Use for Dev */
+  app.get("/api/user/",[authJwt.verifyToken], controller.getAllUser);
+
+  /* Find User By string -------------------------------------*/
+  app.get("/api/user/find", [authJwt.verifyToken],controller.findUser);
+
+  /* User Get Avartar -------------------------------------*/
   app.get("/api/user/avatar/:filename", controller.getAvatar);
+
+  /*Upload User Avartar -------------------------------------*/
+  app.post("/api/user/avatar/",[authJwt.verifyToken,upload.single('image')], controller.uploadAvatar);
+
+  /* Edit User Infomation -------------------------------------*/
+  app.post("/api/user/edit",[authJwt.verifyToken], controller.editUser);
+
+  /* Forgot Password -------------------------------------*/
+  app.post("/api/user/forgotPassword", controller.forgotPassword);
+
+  /* Change Password -------------------------------------*/
+  app.post("/api/user/changePassword",[authJwt.verifyToken], controller.changePassword);
 };

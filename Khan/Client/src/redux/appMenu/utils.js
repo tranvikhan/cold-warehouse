@@ -19,7 +19,8 @@ const assignIdAndParent = (menuItems, parentId) => {
     });
 };
 
-export default (menuItems) => {
+const f = (menuItems) => {
     assignIdAndParent(menuItems);
     return menuItems;
 };
+export default f;

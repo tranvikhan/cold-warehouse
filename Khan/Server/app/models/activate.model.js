@@ -4,8 +4,15 @@ const Activate = mongoose.model(
   "Activate",
   new mongoose.Schema(
     {
-      user:{type: mongoose.Schema.Types.ObjectId, ref: "User"},
-      sensor:{type: mongoose.Schema.Types.ObjectId, ref: "Sensor"}
+      room:{type: mongoose.Schema.Types.ObjectId, ref: "Room"},
+      api:{
+        username: {type: String, require: true},
+        password: { type: String, require: true}
+      },
+      
+      station_id: { type: Number},
+      station_name: { type: String}
+
     },
     { timestamps: true }
   )

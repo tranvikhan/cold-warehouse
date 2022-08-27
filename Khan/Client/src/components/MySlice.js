@@ -9,7 +9,7 @@ export default function MySlice(props) {
     const min = props.min ? props.min : 0;
     const max = props.max ? props.max : 10;
     const [value, setValue] = useState(min);
-    const [axis, setAxis] = useState({ value: 'x', label: 'Axis X' });
+    const [axis, setAxis] = useState({ value: 'x', label: 'Hướng X' });
 
     const changeValue = (value) => {
         props.onChangeValue && props.onChangeValue(value);
@@ -22,7 +22,7 @@ export default function MySlice(props) {
     useEffect(()=>{
         changeAxis();
     }, [axis]);
-
+    
     return (
         <div className="mt-5 row">
             <Select
@@ -30,9 +30,9 @@ export default function MySlice(props) {
                 classNamePrefix="react-select"
                 value={axis}
                 options={[
-                    { value: 'x', label: 'Axis X' },
-                    { value: 'y', label: 'Axis Y' },
-                    { value: 'z', label: 'Axis Z' },
+                    { value: 'x', label: 'Hướng X' },
+                    { value: 'y', label: 'Hướng Y' },
+                    { value: 'z', label: 'Hướng Z' },
                 ]}
                 onChange={(data) => {
                     setAxis(data);

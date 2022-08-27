@@ -1,68 +1,67 @@
 const db = require("../models");
 const Access = db.access;
+const result= require("../helps/result.helps");
 
+/* Check user is a Owner of Room --------------------------------------------*/
 checkOwner = (req, res, next) => {
   Access.findOne({
     room: req.body.room_id,
     role: "Owner",
     user: req.userId,
     accepted: true
-  }).exec((err, result) => {
+  }).exec((err, access) => {
     if (err) {
-      res.status(400).send({ messageError: "Failed! Id not found!" });
+      result.ServerError(res,err);
       return;
     }
-    if (result) {
-      req.access = result;
+    if (access) {
+      req.access = access;
       next();
-    } else {
-      res.status(400).send({ messageError: "Failed! You don't have access!" });
+    }else {
+      result.Forbidden(res,'Không có quyền truy cập');
       return;
     }
   });
 };
 
+/* Check Manager Role --------------------------------------------*/
 checkManager = (req, res, next) => {
   Access.findOne({ room: req.body.room_id, user: req.userId ,accepted: true}).exec(
-    (err, result) => {
+    (err, access) => {
       if (err) {
-        res.status(400).send({ messageError: "Failed! Id not found!" });
+        result.ServerError(res,err);
         return;
       }
 
-      if (result) {
-        if (result.role !== "Viewer") {
-          req.access = result;
+      if (access) {
+        if (access.role !== "Viewer") {
+          req.access = access;
           next();
         } else {
-          res
-            .status(400)
-            .send({ messageError: "Failed! You don't have access!" });
+          result.Forbidden(res,'Không có quyền truy cập');
           return;
         }
       } else {
-        res
-          .status(400)
-          .send({ messageError: "Failed! You don't have access!" });
+        result.Forbidden(res,'Không có quyền truy cập');
         return;
       }
     }
   );
 };
+
+/* Check Viewer Role --------------------------------------------*/
 checkViewer = (req, res, next) => {
   Access.findOne({ room: req.body.room_id, user: req.userId,accepted: true }).exec(
-    (err, result) => {
+    (err, access) => {
       if (err) {
-        res.status(400).send({ messageError: "Failed! Id not found!" });
+        result.ServerError(res,err);
         return;
       }
-      if (result) {
-        req.access = result;
+      if (access) {
+        req.access = access;
         next();
       } else {
-        res
-          .status(400)
-          .send({ messageError: "Failed! You don't have access!" });
+        result.Forbidden(res,'Không có quyền truy cập');
         return;
       }
     }

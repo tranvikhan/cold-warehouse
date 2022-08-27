@@ -125,9 +125,11 @@ class AppMenu extends Component {
         return (
             <React.Fragment>
                 
-                        {this.props.menu && this.props.menu.menuItems && (
+                        {this.props.menu && this.props.menu.menuItems &&  (
                             <ul className="metismenu" id="menu-bar">
                                 {this.props.menu.menuItems.map((item, i) => {
+                                    if(this.props.RoomList.currentRoom)
+                                        if(item.roles.includes(this.props.RoomList.currentRoom.role))
                                     return (
                                         <React.Fragment key={item.id}>
                                             {item.header && !isHorizontal && (
@@ -163,6 +165,7 @@ class AppMenu extends Component {
 const mapStateToProps = state => {
     return {
         menu: state.AppMenu,
+        RoomList: state.RoomList
     };
 };
 export default withRouter(

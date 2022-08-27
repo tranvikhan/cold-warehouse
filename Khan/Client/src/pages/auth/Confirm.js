@@ -51,12 +51,12 @@ class Confirm extends Component {
                                             <div className="mx-auto mb-5">
                                                 <a href="/">
                                                     <img src={logo} alt="" height="24" />
-                                                    <h3 className="d-inline align-middle ml-1 text-logo">WAREHOUSE</h3>
+                                                    <h5 className="d-inline align-middle ml-1 text-logo">QUẢN LÝ NHIỆT ĐỘ KHO LẠNH</h5>
                                                 </a>
                                             </div>
 
-                                            <h6 className="h5 mb-0 mt-4">Successfully Registered</h6>
-                                            <p className="text-muted mt-3 mb-3">Thank you for registering.</p>
+                                            <h6 className="h5 mb-0 mt-4">Đăng kí thành công</h6>
+                                            <p className="text-muted mt-3 mb-3">Cảm ơn bạn đã đăng kí</p>
                                         </CardBody>
                                     </Card>
                                 </Col>
@@ -65,9 +65,9 @@ class Confirm extends Component {
                             <Row className="mt-3">
                                 <Col className="text-center">
                                     <p className="text-muted">
-                                        Return to{' '}
+                                        Trở lại trang{' '}
                                         <Link to="/account/login" className="text-primary font-weight-bold ml-1">
-                                            Login
+                                            Đăng nhập
                                         </Link>
                                     </p>
                                 </Col>

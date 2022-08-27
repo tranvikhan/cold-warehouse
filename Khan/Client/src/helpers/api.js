@@ -1,15 +1,22 @@
+const axios = require('axios');
+const constants = require('constants/apiConfig');
 /**
  * Fetch data from given url
- * @param {*} url
- * @param {*} options
+ * @param {*} config
  */
-const fetchJSON = async (url, options = {}) => {
-    return await fetch(url, options)
-        .then((response) => {
-            return response.json();
+const requestApi =(config={}) => {
+    //console.log(config);
+    return axios({...config,baseURL: constants.BASE_URL})
+        .then(res=>{
+            /* console.log(res.status);
+            console.log(res.data); */
+            return res.data;
         })
-        .catch((error) => {
-            throw error;
-        });
+        .catch(err =>{
+            /* console.log(err.response.status);
+            console.log(err.response.data); */
+            return err.response.data;
+        })
 };
-export { fetchJSON };
+
+export { requestApi };

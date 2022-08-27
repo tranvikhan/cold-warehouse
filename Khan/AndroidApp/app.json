@@ -23,14 +23,15 @@
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "useNextNotificationsApi": true
+      "useNextNotificationsApi": true,
+      "package": "warehouse.iotlab"
     },
-    "notification": { 
+    "notification": {
       "icon": "./assets/icon.png",
       "color": "#311b92",
       "iosDisplayInForeground": true,
       "androidMode": "default",
       "androidCollapsedTitle": "khan"
-     }
+    }
   }
 }

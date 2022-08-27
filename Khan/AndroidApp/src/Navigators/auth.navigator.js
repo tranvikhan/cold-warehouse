@@ -1,8 +1,9 @@
 import React from 'react';
 import { createStackNavigator, CardStyleInterpolators} from '@react-navigation/stack';
-import {SignIn} from '../screens/auth/signIn.component';
-import {SignUp} from '../screens/auth/signUp.component';
+import SignIn from '../screens/auth/signIn.component';
+import SignUp from '../screens/auth/signUp.component';
 import {ForgotPassword} from '../screens/auth/forgotPassword.component';
+
 const { Navigator, Screen } = createStackNavigator();
 export default function AuthNavigator(){
   
@@ -19,4 +20,5 @@ export default function AuthNavigator(){
       }}/>
     </Navigator>
   );
+
 }

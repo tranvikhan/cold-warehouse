@@ -1,0 +1,1 @@
+{"version":3,"sources":["pages/store/index.js"],"names":["Store"],"mappings":"qHAAA,mEAEe,SAASA,IACpB,OACI,oCACI","file":"static/js/31.3ec46c40.chunk.js","sourcesContent":["import React from 'react';\r\n\r\nexport default function Store() {\r\n    return (\r\n        <>\r\n            <h3>Store</h3>\r\n        </>\r\n    );\r\n}\r\n"],"sourceRoot":""}

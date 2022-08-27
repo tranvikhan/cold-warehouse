@@ -1,26 +1,27 @@
 const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config.js");
-const db = require("../models");
-const User = db.user;
-const Role = db.role;
+const result= require("../helps/result.helps");
 
 verifyToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
 
   if (!token) {
-    return res.status(403).send({ message: "No token provided!" });
+    return result.BadRequest(res,'Không tìm thấy Token');
   }
 
   jwt.verify(token, config.secret, (err, decoded) => {
     if (err) {
-      return res.status(401).send({ message: "Unauthorized!" });
+      return result.Unauthorized(res,'Không có quyền truy cập (kiểm tra lại token)')
     }
+
     req.userId = decoded.id;
     next();
+
   });
 };
 
 const authJwt = {
   verifyToken,
 };
+
 module.exports = authJwt;

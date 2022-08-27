@@ -5,10 +5,8 @@ import { Dropdown, DropdownMenu, DropdownToggle, UncontrolledTooltip } from 'rea
 import { Globe } from 'react-feather';
 
 import enFlag from './flags/us.jpg';
-import germanyFlag from './flags/germany.jpg';
-import italyFlag from './flags/italy.jpg';
-import spainFlag from './flags/spain.jpg';
-import russiaFlag from './flags/russia.jpg';
+import vietnam from './flags/vietnam.png';
+
 
 const Languages = [
     {
@@ -16,21 +14,9 @@ const Languages = [
         flag: enFlag,
     },
     {
-        name: 'German',
-        flag: germanyFlag,
-    },
-    {
-        name: 'Italian',
-        flag: italyFlag,
-    },
-    {
-        name: 'Spanish',
-        flag: spainFlag,
-    },
-    {
-        name: 'Russian',
-        flag: russiaFlag,
-    },
+        name: 'Việt Nam',
+        flag: vietnam,
+    }
 ];
 
 
@@ -78,7 +64,7 @@ class LanguageDropdown extends Component {
                     </DropdownMenu>
                 </Dropdown>
 
-                <UncontrolledTooltip placement="left" target="langDropdown">Change language</UncontrolledTooltip>
+                <UncontrolledTooltip placement="left" target="langDropdown">Đổi ngôn ngữ</UncontrolledTooltip>
             </React.Fragment>
         );
     }

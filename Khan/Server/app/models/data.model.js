@@ -7,6 +7,7 @@ const Data = mongoose.model(
       sensor: { type: mongoose.Schema.Types.ObjectId, ref: "Sensor" },
       value: { type: Number },
       status: { type: String, default: "running" },
+      time: {type: Date, require: true}
     },
     { timestamps: true }
   )

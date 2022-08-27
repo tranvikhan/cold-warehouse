@@ -4,10 +4,14 @@ const Sensor = mongoose.model(
   "Sensor",
   new mongoose.Schema(
     {
-      deviceId: { type: String, require: true },
+      data_id: { type: Number, require: true }, 
+      datatype_id: { type: String, require: true },
+
       name: { type: String ,default:"Cảm biến nhiệt độ"},
-      activateKey: { type: String, require: true },
-      activated: {type: Boolean, default: false}
+
+      isUsed: {type: Boolean, default: false},
+      
+      activate: { type: mongoose.Schema.Types.ObjectId, ref: "Activate"}
     },
     { timestamps: true }
   )

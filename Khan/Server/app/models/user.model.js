@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const config = require("../config/auth.config");
 
 const User = mongoose.model(
   "User",
@@ -14,8 +15,8 @@ const User = mongoose.model(
       gender: { type: String, default: "Male" },
 
       address: { type: String, default: "" },
-      status: { type: String, default: "" },
-      avatar: { type: String, default: "http://localhost:8080/api/user/avatar/default.jpg" },
+      status: { type: String, default: "offline" },
+      avatar: { type: String, default: config.baseUrl+"api/user/avatar/"+config.avatarDefault },
     },
     { timestamps: true }
   )
