@@ -1,0 +1,242 @@
+﻿********************************************************** Hướng dẫn chi tiết các API lấy dữ liệu quan trắc **********************************************************
+
+0. API get token từ tài khoản đã cấp
+
+Description: API lấy mã token dùng để xác thực user khi thực hiện get data bằng các API khác
+
+URI: iotlab.net.vn:3000/api/auth/token
+
+METHOD: POST
+
+INPUT
+	Header: {
+		Content-Type : "application/x-www-form-urlencoded"
+	}
+	Body: {
+		username : "YourUserName",    // User name chia sẽ dữ liệu: api_sharing@ccthuyloihaugiang
+		password : "YourPassword",    // password chia sẽ dữ liệu: share@123
+		grant_type : "password"
+	}	
+OUTPUT
+	{
+		"accessToken": "Access Key", // Token key dùng để sử dụng trong hệ thống thay vì sử dụng lại thông tin đăng nhập
+		"token_type": "JWT",		 // Loại token: JWT
+		"expires": "Expres Time",    // Thời gian hết hạn của token
+		"user_id": "user_id",        // Mã của user đã thực hiện get token
+		"username": "username",      // user name của user thực hiện get token
+		"fullName": "fullName",	     // Họ tên của user thực hiện get token
+		"role": "role",              // Quyền của user trong hệ thống
+		"domain_id": domain_id,		 // Mã khu vực trực thuộc của user thuộc tỉnh, tổ chức nào,....
+	}
+	
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1. API get danh sách các trạm
+
+Description: API lấy danh sách trạm đang được cấp quyền lấy dữ liệu của user
+
+URI: iotlab.net.vn:3000/api/station/getbyuser/{user_id}
+	Trong đó:
+		- user_id được get từ API.0
+
+METHOD : GET
+
+INPUT
+	Header: {
+		Authorization : "JWT {token_key}"   // Token_key là mã đã lấy được từ API.0
+	}
+	
+OUTPUT
+	{
+		"Error": false,                                          // Trạng thái là lỗi hay không
+		"Message": "Success",                                    // Thông điệp của API
+		"data": [
+			{
+				"station_id": 0,                                 // Mã trạm 
+				"station_name": "Station Name",                  // Tên trạm
+				"station_location": "Location",                  // Tọa độ của trạm trên google map
+				"station_node": "Sensors type",                  // Các loại dữ liệu của trạm
+				"station_address": "Address",                    // Địa chỉ hành chính của trạm
+				"station_duration": 5,                           // Thời gian lấy mẫu dữ liệu của các cảm biến, đơn vị phút
+				"station_updateStatus": false,                   // Cờ cập nhật trạng thái của trạm
+				"isDelete": false,                               // Cờ đã xóa của trạm
+				"Pond": {                                        
+					"pond_description": "Pond description"       // Thông tin của ao trong trường hợp trạm được đặt ở ao cụ thể
+				},                                               
+				"River": {
+					"river_name": "River name"                   // Thông tin của sông trong trường hợp trạm đặt ở sông
+				},
+				"Region": {
+					"region_name": "Region Name"                 // Thông tin của
+				},
+				"Sink": {
+					"sink_name": "Sink Name"
+				}
+			}
+		],
+		"length": n                                              // Số lượng trạm lấy được
+	}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2. API get danh sách trạm có phân trang
+
+Description: API lấy danh sách trạm có phân trang đang được cấp quyền lấy dữ liệu của user
+
+URI: iotlab.net.vn:3000/api/station/getpagination/{user_id}?page={page_number}&pageSize={number_of_record}
+	Trong đó:
+		- user_id được get từ API.0
+		- page_number số của trang hiện tại, bắt đầu tính từ 0
+		- number_of_record số lượng object dữ liệu mỗi trang
+
+METHOD : GET
+
+INPUT
+	Header: {
+		Authorization : "JWT {token_key}"   // {token_key}: là mã đã lấy được từ API.0
+	}
+OUTPUT
+	{
+		"Error": false,                                               // Trạng thái là lỗi hay không
+		"Message": "Success",                                         // Thông điệp của API
+		"data": {
+			Items: [
+				{
+					"station_id": 0,                                 // Mã trạm 
+					"station_name": "Station Name",                  // Tên trạm
+					"station_location": "Location",                  // Tọa độ của trạm trên google map
+					"station_node": "Sensors type",                  // Các loại dữ liệu của trạm
+					"station_address": "Address",                    // Địa chỉ hành chính của trạm
+					"station_duration": 5,                           // Thời gian lấy mẫu dữ liệu của các cảm biến, đơn vị phút
+					"station_updateStatus": false,                   // Cờ cập nhật trạng thái của trạm
+					"isDelete": false,                               // Cờ đã xóa của trạm
+					"Pond": {                                        
+						"pond_description": "Pond description"       // Thông tin của ao trong trường hợp trạm được đặt ở ao cụ thể
+					},                                               
+					"River": {
+						"river_name": "River name"                   // Thông tin của sông trong trường hợp trạm đặt ở sông
+					},
+					"Region": {
+						"region_name": "Region Name"                 // Thông tin của
+					},
+					"Sink": {
+						"sink_name": "Sink Name"                     // Tên của kênh
+					}
+				}
+			],
+			"Page": "0",                                              // Trang hiện tại
+			"TotalCount": 1,                                          // Số lượng data hiện tại
+			"TotalPages": 1                                           // Tổng cộng trang
+		} 
+	}
+	
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+3. API get dữ liệu đo mới nhất của trạm
+
+Description: API lấy dữ liệu đo mới nhất của tất cả các loại dữ liệu có trong trạm
+
+URI: iotlab.net.vn:3000/api/data/gettopbystation/{station_id}
+	Trong đó: 
+		- {station_id}: mã trạm được lấy từ API 1. hoặc 2.
+		
+METHOD : GET	
+	
+INPUT
+	Header: {
+		Authorization : "JWT {token_key}"   // {token_key}: là mã đã lấy được từ API.0
+	}
+
+OUTPUT
+	{
+		"Error": false,                                              // Trạng thái là lỗi hay không
+		"Message": "Success",                                        // Thông điệp của API
+		"data": [
+			{
+				"data_id": 0,                                        // Mã id của record data
+				"station_id":  0,                                    // Mã trạm
+				"datatype_id": "Data type",                          // Mã loại dữ liệu, tham chiếu API 5. để lấy danh sách mã dữ liệu
+				"sink_id": 0,                                        // Mã kênh
+				"pond_id": 0,                                        // Mã ao
+				"river_id": 0,                                       // Mã sông
+				"data_value": 0,                                     // Giá trị đo được của dữ liệu tương ứng, kiểu float
+				"data_createdDate": "Create date",                   // Thời gian lấy mẫu dữ liệu cụ thể
+				"data_stationType": 0,                               // Loại trạm
+				"threshold_level": 0                                 // Mức độ của ngưỡng
+			}
+		],
+		"length": 0                                                  // Số lượng data lấy được
+	}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4. API get data của trạm theo thời gian chỉ định
+
+Description: API lấy dữ liệu đo của tất cả các loại dữ liệu có trong trạm trong một khoảng thời gian nhất định
+
+URI: iotlab.net.vn:3000/api/data/getbystation/{station_id}?dateStart={from_date}&dateEnd={to_date}
+	Trong đó: 
+		- {station_id}: mã trạm được lấy từ API 1. hoặc 2.
+		- {from_date}: Dữ liệu được lấy từ ngày
+		- {to_date}: Dữ liệu được lấy đến ngày
+		
+METHOD : GET	
+	
+INPUT
+	Header: {
+		Authorization : "JWT {token_key}"   // {token_key}: là mã đã lấy được từ API.0
+	}
+
+OUTPUT
+	{
+		"Error": false,                                              // Trạng thái là lỗi hay không
+		"Message": "Success",                                        // Thông điệp của API
+		"data": [
+			{
+				"data_id": 0,                                        // Mã id của record data
+				"station_id":  0,                                    // Mã trạm
+				"datatype_id": "Data type",                          // Mã loại dữ liệu, tham chiếu API 5. để lấy danh sách mã dữ liệu
+				"sink_id": 0,                                        // Mã kênh
+				"pond_id": 0,                                        // Mã ao
+				"river_id": 0,                                       // Mã sông
+				"data_value": 0,                                     // Giá trị đo được của dữ liệu tương ứng, kiểu float
+				"data_createdDate": "Create date",                   // Thời gian lấy mẫu dữ liệu cụ thể
+				"data_stationType": true,                            // Loại trạm
+			}
+		],
+		"length": 0                                                  // Số lượng data lấy được
+	}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+5. API get loại dữ liệu cảm biến của hệ thống
+
+Description: API lấy tất cả các loại dữ liệu cảm biến
+
+URI: iotlab.net.vn:3000/api/datatype/getall
+
+METHOD : GET	
+	
+INPUT
+	Header: {
+		Authorization : "JWT {token_key}"   // {token_key}: là mã đã lấy được từ API.0
+	}
+
+OUTPUT
+	{
+		"Error": false,                                                 // Trạng thái là lỗi hay không
+		"Message": "Success",                                           // Thông điệp của API
+		"data": [
+			{
+				"datatype_id": "Data type id",                          // Mã loại dữ liệu
+				"datatype_name": "Data type name",                      // Tên loại dữ liệu
+				"datatype_description": "Data type description",        // Mô tả chi tiết
+				"datatype_unit": "Data type unit",                      // Đơn vị đo của loại
+				"datatype_minValue": 0,                                 // Giá trị nhỏ nhất
+				"datatype_maxValue": 0                                  // Giá trị lớn nhất
+			}
+		],
+		"length": 0                                                     // Số lượng data lấy được
+	}
+	
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
